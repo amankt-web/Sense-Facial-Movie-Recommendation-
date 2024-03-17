@@ -1,4 +1,6 @@
 from __future__ import division, print_function
+from flask import  request
+from flask_mail import Message,Mail
 #import sys
 import os
 import cv2
@@ -16,6 +18,8 @@ import statistics as st
 
 
 app = Flask(__name__)
+
+mail = Mail(app)
 
 @app.route("/")
 def home():
@@ -144,6 +148,34 @@ def songsNeutral():
 @app.route('/templates/join_page', methods = ['GET', 'POST'])
 def join():
     return render_template("join_page.html")
+
+@app.route('/submit_form', methods=['POST'])
+def submit_form():
+    if request.method == 'POST':
+        # Get form data
+        first_name = request.form['firstname']
+        last_name = request.form['lastname']
+        age = request.form['age']
+        subject = request.form['subject']
+
+        # Create message
+        message = Message('New Form Submission',
+                          sender='atulshaa1@gmail.com',
+                          recipients=['devisimtra644@gmail.com'])
+        message.body = f'First Name: {first_name}\nLast Name: {last_name}\nAge: {age}\nSubject: {subject}'
+
+        # Send email
+        mail.send(message)
+
+        return 'Form submitted successfully. Thank you!'
+    
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'atulshaa1@gmail.com'
+app.config['MAIL_PASSWORD'] = 'dfsd zfla oyzu xepd'
+
     
 if __name__ == "__main__":
     app.run(debug=True, use_debugger=False, use_reloader=False)

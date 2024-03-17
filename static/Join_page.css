@@ -8,7 +8,7 @@
 }
 
 body{
-  background: #FEF9A7;
+  background: #ADD8E6;
 }
 
 .wrapper{
@@ -19,7 +19,7 @@ body{
 .wrapper h1{
   font-family: 'Yatra One', cursive;
   font-size: 48px;
-  color: #fff;
+  color: #000000;
   margin-bottom: 25px;
 }
 
